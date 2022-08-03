@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'components/appBar.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -38,15 +38,31 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ApppBar(),
-      body: SingleChildScrollView(
+      appBar: const ApppBar(),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/roadmap.jpg'),
+            fit:BoxFit.fitHeight
+          ),
+        ),
         child: Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
-                Image(image: AssetImage('roadmap.jpg'))
-              ]
-              ),
+              children:  <Widget>[
+                const Text("Welcome!",style:TextStyle(color: Colors.white)),
+                TextButton(
+                  child: const Text('login',style:TextStyle(color: Colors.white)),
+                  onPressed: () => {},
+                  
+                )
+                ,
+                TextButton(
+                  child: const Text('register',style:TextStyle(color: Colors.white)),
+                  onPressed: () => {},
+                )
+                
+              ]),
         ),
       ),
     );

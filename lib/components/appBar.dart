@@ -9,8 +9,12 @@ class ApppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title:TextButton(
-        child: const Text('Climate Pass 🛂', style: const TextStyle(color: Colors.white)),
-      onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp(),)),),
+        child: Row(
+          children: const [/* Text('ee'), */
+            Text('Climate Pass 🛂', style: TextStyle(color: Colors.white)),
+          ],
+        ),
+      onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp(),)),),
       actions: [
         TextButton(
           child: const Text('contact us', style: TextStyle(color: Colors.white)),
@@ -22,9 +26,9 @@ class ApppBar extends StatelessWidget implements PreferredSizeWidget {
                 )),
         ),
         TextButton(
-          child: const Text('about', style: const TextStyle(color: Colors.white)),
+          child: const Text('about', style: TextStyle(color: Colors.white)),
           //links to /about
-onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => Bout(),)),
+onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => const Bout(),)),
         ),
         
       ],
@@ -35,8 +39,8 @@ onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => 
   Size get preferredSize => const Size.fromHeight(100);
 }
 
-Future<void> _launchUrl(_url) async {
-  if (!await launchUrl(_url)) {
-    throw 'Could not launch $_url';
+Future<void> _launchUrl(url) async {
+  if (!await launchUrl(url)) {
+    throw 'Could not launch $url';
   }
 }

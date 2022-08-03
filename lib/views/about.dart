@@ -3,22 +3,20 @@ import 'package:flutter/material.dart';
 import '../components/appBar.dart';
 
 class Bout extends StatelessWidget {
-  
+  const Bout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: ApppBar(),
-      body: const Text('''
+      body: Text('''
 
 
-
-      Karbon Moneta is a proof of carbon removal currency: we icentivize people to remove GreenHouse Gases (GHGs) from the atmosphere.
-      Every block time (or equivalent), we mint a token to be attributed to the best carbon removal contributors, in select carbon removal projects. Most notably, we integrate with harmonia-eko's Karbon Basar, the NFT carbon offset marketplace.
-      Specifically, every 0.1 tonne of carbon removal will give you one chance of winning the token. 
-      '''
-),
+This initiative is a voluntary climate pass that aims to become a global standard. Alike sanitary passes,
+this one is a way to make a difference in the world: it will be a proof of carbon offsets for inbound trips.
+Therefore, most facilities, organizations and individuals will be able to benefit from this initiative through requiring it and thus
+showing their commitment to the cause.
+      '''),
     );
   }
-  
 }
