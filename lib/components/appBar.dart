@@ -36,7 +36,7 @@ onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => 
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(40);
 }
 
 Future<void> _launchUrl(url) async {
