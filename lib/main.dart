@@ -7,27 +7,15 @@ import 'views/dashboard.dart';
 import 'views/about.dart';
 import 'package:provider/provider.dart';
                        
-void main() {
-  Firebase.initializeApp(
+void main() async {
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   runApp(const MyApp());
 }
 
-Future<UserCredential> signInWithGoogle() async {
-  // Create a new provider
-  GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-  googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-  googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
-
-  // Once signed in, return the UserCredential
-  return await FirebaseAuth.instance.signInWithPopup(googleProvider);
-
-  // Or use signInWithRedirect
-  // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -62,6 +50,21 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+
+  Future<UserCredential> signInWithGoogle() async {
+  // Create a new provider
+  GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+  googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+  googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+
+  // Once signed in, return the UserCredential
+  return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+
+  // Or use signInWithRedirect
+  // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

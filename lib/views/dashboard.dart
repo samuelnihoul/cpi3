@@ -14,14 +14,14 @@ class Dashboard extends StatefulWidget {
 class DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    var username = Provider.of<User?>(context);
+    var user = Provider.of<User?>(context);
     return Container(
       child: Scaffold(
         appBar: ApppBar(),
         body: Center(
           child: Column(
             children: [
-              Text('🌞 ${username??'guest'} 🌞'),
+              Text('🌞 ${user!.displayName??'guest'} 🌞'),
               ElevatedButton(
                 child: Text('My Certificates'),
                 onPressed: () => Navigator.pushNamed(context, '/certificates'),
