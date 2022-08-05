@@ -5,7 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'views/dashboard.dart';
 import 'views/about.dart';
-
+import 'package:provider/provider.dart';
+                       
 void main() {
   Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -33,22 +34,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        
-        '/dashboard': (context) => Dashboard(),
-        '/about': (context) => const Bout(),
-      },
-      title: 'Climate Pass 🛂',
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch(
-              primarySwatch: const MaterialColor(700, {
-                1: Colors.black,
-                700: Color(0xffffd700),
-                200: Color(0xffffd700)
-              }),
-              brightness: Brightness.light)),
-      home: MyHomePage(),
+    return MultiProvider(
+      providers:[
+        StreamProvider<User?>.value(value:FirebaseAuth.instance.authStateChanges(),initialData: null,),
+          
+  
+      ],
+      child: MaterialApp(
+        routes: {
+          '/certificates': (context) => myCertificates(),
+          '/dashboard': (context) => Dashboard(),
+          '/about': (context) => const Bout(),
+        },
+        title: 'Climate Pass 🛂',
+        theme: ThemeData(
+            colorScheme: ColorScheme.fromSwatch(
+                primarySwatch: const MaterialColor(700, {
+                  1: Colors.black,
+                  700: Color(0xffffd700),
+                  200: Color(0xffffd700)
+                }),
+                brightness: Brightness.light)),
+        home: MyHomePage(),
+      ),
     );
   }
 }
@@ -71,23 +79,20 @@ class MyHomePage extends StatelessWidget {
                 ElevatedButton(
                   child: const Text('login with Google',
                       style: TextStyle(color: Colors.white)),
-                  onPressed:  ()async {
-                    final UserCredential user = await signInWithGoogle();
-                    Navigator.pushNamed(
-                      
-                      context, '/dashboard',
-                      arguments: 
-  user
-                      )
-                      ;},
-                  ),
-                
+                  onPressed: () async {
+                    await signInWithGoogle();
+                    Navigator.pushNamed(context, '/dashboard');
+                  },
+                ),
                 ElevatedButton(
                   child: const Text('register with Google',
                       style: TextStyle(color: Colors.white)),
-                  onPressed: () => {
-                    Navigator.pushNamed(context,'/dashboard',arguments:signInWithGoogle())
-                    },
+                  onPressed: () async {
+                    await signInWithGoogle();
+                    Navigator.pushNamed(context, '/dashboard',
+                        
+                    );
+                  },
                 )
               ]),
         ),
@@ -95,3 +100,4 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
