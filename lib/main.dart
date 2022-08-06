@@ -6,7 +6,7 @@ import 'firebase_options.dart';
 import 'views/dashboard.dart';
 import 'views/about.dart';
 import 'package:provider/provider.dart';
-                       
+                    
 void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
