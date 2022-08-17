@@ -7,7 +7,7 @@ import 'views/dashboard.dart';
 import 'views/about.dart';
 import 'package:provider/provider.dart';
 import 'views/myCertificates.dart';
-
+import 'package:auth_buttons/auth_buttons.dart' show GoogleAuthButton;
 void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -74,31 +74,22 @@ class MyHomePage extends StatelessWidget {
           image: DecorationImage(
               image: AssetImage('assets/roadmap.jpg'), fit: BoxFit.fitHeight),
         ),
-        child: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text("Welcome!", style: TextStyle(color: Colors.white)),
-                ElevatedButton(
-                  child: const Text('login with Google',
-                      style: TextStyle(color: Colors.white)),
-                  onPressed: () async {
-                    await signInWithGoogle();
-                    Navigator.pushNamed(context, '/dashboard');
-                  },
-                ),
-                ElevatedButton(
-                  child: const Text('register with Google',
-                      style: TextStyle(color: Colors.white)),
-                  onPressed: () async {
-                    await signInWithGoogle();
-                    Navigator.pushNamed(
-                      context,
-                      '/dashboard',
-                    );
-                  },
-                )
-              ]),
+        child: Container(padding: EdgeInsets.only(top:30),
+          child: Center(
+            child: Column(
+                
+                children: <Widget>[
+                  const Text("Welcome! ฅ^•ﻌ•^ฅ",style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold)),
+                  GoogleAuthButton(
+                   
+                    onPressed: () async {
+                      await signInWithGoogle();
+                      Navigator.pushNamed(context, '/dashboard');
+                    },
+                  ),
+                
+                ]),
+          ),
         ),
       ),
     );
