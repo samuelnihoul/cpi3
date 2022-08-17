@@ -21,7 +21,7 @@ class DashboardState extends State<Dashboard> {
         body: Center(
           child: Column(
             children: [
-              Text('🌞 ${user!.displayName??'guest'} ✨'),
+              Text('🌞 ${user!.displayName} ✨'),
               ElevatedButton(
                 child: const Text('My Certificates'),
                 onPressed: () => Navigator.pushNamed(context, '/certificates'),
@@ -36,7 +36,7 @@ class DashboardState extends State<Dashboard> {
 
 
 
-class myCertificates extends StatelessWidget {
+class MyCertificates extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +46,7 @@ class myCertificates extends StatelessWidget {
           children: [
             const Text('🌞 My Certificates ✨'),
             ListView(
+              shrinkWrap: true,
               children: <Widget>[
                 ListTile(
                   title: const Text('Certificate 1'),
@@ -55,6 +56,7 @@ class myCertificates extends StatelessWidget {
                     Navigator.pushNamed(context, '/dashboard');
                   },
                 ),
+
                 ListTile(
                   title: const Text('Certificate 2'),
                   subtitle: const Text('This is a certificate'),

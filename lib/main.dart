@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         routes: {
-          '/certificates': (context) => myCertificates(),
+          '/certificates': (context) => MyCertificates(),
           '/dashboard': (context) => Dashboard(),
           '/about': (context) => const Bout(),
         },
