@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../components/appBar.dart';
 import 'package:provider/provider.dart';
+import './myCertificates.dart';
 // the dashboard for the user. Greets the user. Also has a button to sign out. Contains buttons to view certificates and to scan certificates. Also a QR code generator.
 
 class Dashboard extends StatefulWidget {
@@ -28,54 +29,6 @@ class DashboardState extends State<Dashboard> {
               )
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-
-
-class MyCertificates extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const ApppBar(),
-      body: Center(
-        child: Column(
-          children: [
-            const Text('🌞 My Certificates ✨'),
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                ListTile(
-                  title: const Text('Certificate 1'),
-                  subtitle: const Text('This is a certificate'),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/dashboard');
-                  },
-                ),
-
-                ListTile(
-                  title: const Text('Certificate 2'),
-                  subtitle: const Text('This is a certificate'),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/dashboard');
-                  },
-                ),
-                ListTile(
-                  title: const Text('Certificate 3'),
-                  subtitle: const Text('This is a certificate'),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/dashboard');
-                  },
-                ),
-              ],
-            ),
-          ],
         ),
       ),
     );

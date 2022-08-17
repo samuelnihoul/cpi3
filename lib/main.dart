@@ -6,7 +6,8 @@ import 'firebase_options.dart';
 import 'views/dashboard.dart';
 import 'views/about.dart';
 import 'package:provider/provider.dart';
-                    
+import 'views/myCertificates.dart';
+
 void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -15,18 +16,17 @@ void main() async {
   runApp(const MyApp());
 }
 
-
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers:[
-        StreamProvider<User?>.value(value:FirebaseAuth.instance.authStateChanges(),initialData: null,),
-          
-  
+      providers: [
+        StreamProvider<User?>.value(
+          value: FirebaseAuth.instance.authStateChanges(),
+          initialData: null,
+        ),
       ],
       child: MaterialApp(
         routes: {
@@ -50,20 +50,20 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-
   Future<UserCredential> signInWithGoogle() async {
-  // Create a new provider
-  GoogleAuthProvider googleProvider = GoogleAuthProvider();
+    // Create a new provider
+    GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-  googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-  googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+    googleProvider
+        .addScope('https://www.googleapis.com/auth/contacts.readonly');
+    googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
 
-  // Once signed in, return the UserCredential
-  return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithPopup(googleProvider);
 
-  // Or use signInWithRedirect
-  // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
-}
+    // Or use signInWithRedirect
+    // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +92,9 @@ class MyHomePage extends StatelessWidget {
                       style: TextStyle(color: Colors.white)),
                   onPressed: () async {
                     await signInWithGoogle();
-                    Navigator.pushNamed(context, '/dashboard',
-                        
+                    Navigator.pushNamed(
+                      context,
+                      '/dashboard',
                     );
                   },
                 )
@@ -103,4 +104,3 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-
