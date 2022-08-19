@@ -41,6 +41,7 @@ class Uploader extends StatelessWidget {
 class MyCertificates extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<User?>(context);
     return Scaffold(
       appBar: const ApppBar(),
       body: Center(
@@ -48,38 +49,55 @@ class MyCertificates extends StatelessWidget {
           children: [
             const Text('🌞 My Certificates ✨'),
             Uploader(),
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                ListTile(
-                  title: const Text('Certificate 1'),
-                  subtitle: const Text('This is a certificate'),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/dashboard');
-                  },
-                ),
-                ListTile(
-                  title: const Text('Certificate 2'),
-                  subtitle: const Text('This is a certificate'),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/dashboard');
-                  },
-                ),
-                ListTile(
-                  title: const Text('Certificate 3'),
-                  subtitle: const Text('This is a certificate'),
-                  trailing: const Icon(Icons.keyboard_arrow_right),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/dashboard');
-                  },
-                ),
-              ],
-            ),
+            StreamBuilder<ListResult>(
+                stream: listAllPaginated(FirebaseStorage.instance
+                    .ref()
+                    .child('/${user?.displayName}')),
+                builder: ((context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Error ${snapshot.error} ${snapshot.data}');
+                  } else if (snapshot.hasData) {
+                    final products = snapshot.data!;
+                    return ListView(
+                        children: products.items.map(buildDocument).toList());
+                  } else
+                    return Center(child: CircularProgressIndicator());
+                }))
           ],
         ),
       ),
+    );
+  }
+}
+
+Stream<ListResult> listAllPaginated(Reference storageRef) async* {
+  String? pageToken;
+  do {
+    final listResult = await storageRef.list(ListOptions(
+      maxResults: 100,
+      pageToken: pageToken,
+    ));
+    yield listResult;
+    pageToken = listResult.nextPageToken;
+  } while (pageToken != null);
+}
+
+Widget buildDocument(Document product) => ListTile(
+      title: Text(product.name),
+      trailing: Text(product.created),
+    );
+
+class Document {
+  final String name;
+  @required
+  final String created;
+
+  Document({required this.name, required this.created});
+
+  factory Document.fromJson(Map<String, dynamic> data) {
+    return Document(
+      name: data['name'] as String,
+      created: data['created'] as String,
     );
   }
 }
