@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           '/dashboard': (context) => Dashboard(),
           '/about': (context) => const Bout(),
         },
-        title: 'Climate Pass 🛂',
+        title: 'Klima Pas 🛂',
         theme: ThemeData(
             colorScheme: ColorScheme.fromSwatch(
                 primarySwatch: const MaterialColor(700, {
