@@ -8,7 +8,9 @@ import 'views/about.dart';
 import 'package:provider/provider.dart';
 import 'views/myCertificates.dart';
 import 'package:auth_buttons/auth_buttons.dart' show GoogleAuthButton;
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -54,10 +56,6 @@ class MyHomePage extends StatelessWidget {
     // Create a new provider
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-    googleProvider
-        .addScope('https://www.googleapis.com/auth/contacts.readonly');
-    googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
-
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithPopup(googleProvider);
 
@@ -74,21 +72,20 @@ class MyHomePage extends StatelessWidget {
           image: DecorationImage(
               image: AssetImage('assets/roadmap.jpg'), fit: BoxFit.fitHeight),
         ),
-        child: Container(padding: EdgeInsets.only(top:30),
+        child: Container(
+          padding: EdgeInsets.only(top: 30),
           child: Center(
-            child: Column(
-                
-                children: <Widget>[
-                  const Text("Welcome! ฅ^•ﻌ•^ฅ",style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold)),
-                  GoogleAuthButton(
-                   
-                    onPressed: () async {
-                      await signInWithGoogle();
-                      Navigator.pushNamed(context, '/dashboard');
-                    },
-                  ),
-                
-                ]),
+            child: Column(children: <Widget>[
+              const Text("🙋",
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+              const Text('maybe enable popups if auth fails'),
+              GoogleAuthButton(
+                onPressed: () async {
+                  await signInWithGoogle();
+                  Navigator.pushNamed(context, '/dashboard');
+                },
+              ),
+            ]),
           ),
         ),
       ),

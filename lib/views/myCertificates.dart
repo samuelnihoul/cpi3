@@ -27,9 +27,9 @@ class Uploader extends StatelessWidget {
               .child('/${user?.displayName}/$fileName')
               .putData(fileBytes ?? Uint8List(0));
           print(task.bytesTransferred);
-          SnackBar(content: Text('success'));
+          SnackBar(content: Text('success 😊'));
         } else {
-          SnackBar(content: Text('no file selected'));
+          SnackBar(content: Text('no file selected 😉'));
         }
       },
       child: Text(
