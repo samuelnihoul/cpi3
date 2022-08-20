@@ -82,22 +82,6 @@ Stream<ListResult> listAllPaginated(Reference storageRef) async* {
   } while (pageToken != null);
 }
 
-Widget buildDocument(Document product) => ListTile(
+Widget buildDocument(Reference product) => ListTile(
       title: Text(product.name),
-      trailing: Text(product.created),
     );
-
-class Document {
-  final String name;
-  @required
-  final String created;
-
-  Document({required this.name, required this.created});
-
-  factory Document.fromJson(Map<String, dynamic> data) {
-    return Document(
-      name: data['name'] as String,
-      created: data['created'] as String,
-    );
-  }
-}
