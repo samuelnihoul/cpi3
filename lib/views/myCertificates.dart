@@ -20,18 +20,22 @@ class Uploader extends StatelessWidget {
         if (file != null) {
           Uint8List? fileBytes = file!.files.first.bytes;
           String fileName = file!.files.first.name;
-          SnackBar(content: Text('uploading...'));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('uploading...')));
           // Upload file
           TaskSnapshot task = await FirebaseStorage.instance
               .ref()
               .child('/${user?.displayName}/$fileName')
               .putData(fileBytes ?? Uint8List(0));
           print(task.bytesTransferred);
-          SnackBar(content: Text('success 😊'), backgroundColor: Colors.green);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('success 😊'), backgroundColor: Colors.green));
         } else {
-          SnackBar(
-              content: Text('no file selected 😉'),
-              backgroundColor: Colors.red);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('no file selected 😉'),
+                backgroundColor: Colors.red),
+          );
         }
       },
       child: Text(
