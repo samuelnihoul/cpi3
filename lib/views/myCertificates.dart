@@ -5,6 +5,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:typed_data';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:download/download.dart';
+import 'package:file/local.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:cross_file/cross_file.dart';
 
 class Uploader extends StatelessWidget {
   const Uploader({Key? key}) : super(key: key);
@@ -66,7 +71,10 @@ class MyCertificates extends StatelessWidget {
                     final products = snapshot.data!;
                     return ListView(
                         shrinkWrap: true,
-                        children: products.items.map(buildDocument).toList());
+                        children: products.items
+                            .map((e) =>
+                                buildDocument(e, user?.displayName ?? ''))
+                            .toList());
                   } else
                     return Center(
                       child: CircularProgressIndicator(color: Colors.black),
@@ -91,6 +99,16 @@ Stream<ListResult> listAllPaginated(Reference storageRef) async* {
   } while (pageToken != null);
 }
 
-Widget buildDocument(Reference product) => ListTile(
-      title: Text(product.name),
-    );
+Widget buildDocument(Reference product, String user) => ListTile(
+    title: Text(product.name),
+
+    //download the document
+    onTap: () => download(product.name, user));
+
+download(String fileName, String displayName) async {
+  final islandRef =
+      FirebaseStorage.instance.ref().child('/$displayName/$fileName').fullPath;
+
+  final x = XFile(islandRef);
+  x.saveTo('/');
+}
