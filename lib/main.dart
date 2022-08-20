@@ -8,6 +8,7 @@ import 'views/about.dart';
 import 'package:provider/provider.dart';
 import 'views/myCertificates.dart';
 import 'package:auth_buttons/auth_buttons.dart' show GoogleAuthButton;
+import 'package:firebase_storage/firebase_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
