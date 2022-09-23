@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'views/myCertificates.dart';
 import 'package:auth_buttons/auth_buttons.dart' show GoogleAuthButton;
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,7 +80,6 @@ class MyHomePage extends StatelessWidget {
             child: Column(children: <Widget>[
               const Text("🙋",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-              const Text('maybe enable popups if auth fails'),
               GoogleAuthButton(
                 onPressed: () async {
                   await signInWithGoogle();
