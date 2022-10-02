@@ -10,6 +10,8 @@ import 'views/myCertificates.dart';
 import 'package:auth_buttons/auth_buttons.dart' show GoogleAuthButton;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart'
+    show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +24,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -59,7 +61,7 @@ class MyHomePage extends StatelessWidget {
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+    return await FirebaseAuth.instance.signInWithAuthProvider(googleProvider);
 
     // Or use signInWithRedirect
     // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
@@ -80,12 +82,14 @@ class MyHomePage extends StatelessWidget {
             child: Column(children: <Widget>[
               const Text("🙋",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-              GoogleAuthButton(
-                onPressed: () async {
-                  await signInWithGoogle();
-                  Navigator.pushNamed(context, '/dashboard');
-                },
-              ),
+              (kIsWeb)
+                  ? GoogleAuthButton(
+                      onPressed: () async {
+                        await signInWithGoogle();
+                        Navigator.pushNamed(context, '/dashboard');
+                      },
+                    )
+                  : Container()
             ]),
           ),
         ),
