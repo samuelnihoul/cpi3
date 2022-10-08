@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         routes: {
           '/certificates': (context) => MyCertificates(),
-          '/dashboard': (context) => Dashboard(),
+          '/dashboard': (context) => const Dashboard(),
           '/about': (context) => const Bout(),
         },
         title: 'Klima Pas 🛂',
@@ -61,7 +61,11 @@ class MyHomePage extends StatelessWidget {
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithAuthProvider(googleProvider);
+    if (kIsWeb) {
+      return await FirebaseAuth.instance.signInWithPopup(googleProvider);
+    } else {
+      return await FirebaseAuth.instance.signInWithAuthProvider(googleProvider);
+    }
 
     // Or use signInWithRedirect
     // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
@@ -77,19 +81,17 @@ class MyHomePage extends StatelessWidget {
               image: AssetImage('assets/roadmap.jpg'), fit: BoxFit.fitHeight),
         ),
         child: Container(
-          padding: EdgeInsets.only(top: 30),
+          padding: const EdgeInsets.only(top: 30),
           child: Center(
             child: Column(children: <Widget>[
               const Text("🙋",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-              (kIsWeb)
-                  ? GoogleAuthButton(
-                      onPressed: () async {
-                        await signInWithGoogle();
-                        Navigator.pushNamed(context, '/dashboard');
-                      },
-                    )
-                  : Container()
+              GoogleAuthButton(
+                onPressed: () async {
+                  await signInWithGoogle();
+                  Navigator.pushNamed(context, '/dashboard');
+                },
+              )
             ]),
           ),
         ),

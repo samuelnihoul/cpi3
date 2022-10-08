@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:551854441061:android:efa014352b70be465efc8c",
+        "mobilesdk_app_id": "1:551854441061:android:42f289cf73471df65efc8c",
         "android_client_info": {
-          "package_name": "com.example.cpi3"
+          "package_name": "ooo.harmoniaeko.klimapas"
         }
       },
       "oauth_client": [
